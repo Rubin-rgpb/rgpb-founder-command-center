@@ -77,3 +77,62 @@
  .daily-block-status{max-width:70px;font-size:10px}
  .daily-summary span{font-size:10px}
 }
+
+
+/* v0.1.5 — two independent actions per block: details and completion */
+html,body{max-width:100%;overflow-x:hidden}
+.app,.main,.content{min-width:0;max-width:100%}
+.daily-block-card{border:1px solid var(--line);border-radius:15px;background:var(--panel);min-width:0;overflow:hidden}
+.daily-block-card-done{border-color:#22b783;background:color-mix(in srgb,var(--panel) 90%,#22b783)}
+.daily-block-row{display:flex;gap:10px;align-items:stretch;min-height:96px;min-width:0;padding:8px 12px}
+.daily-block-info-action{display:flex;align-items:center;gap:13px;flex:1;min-width:0;text-align:left;color:var(--text);background:transparent;border:0;padding:7px 3px}
+.daily-block-info-action .daily-block-info{flex:1;min-width:0}
+.daily-block-info-action .daily-description-hint{display:flex;align-items:center;gap:4px;margin-top:9px;color:#efc15b;font-size:12px;font-weight:700}
+.daily-chevron-open{transform:rotate(90deg)}
+.daily-check-action{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex:0 0 auto;min-width:128px;background:transparent;color:var(--text);border:0;padding:7px 4px}
+.daily-check-action-done .daily-block-status{color:#22b783}
+.daily-block-info-action:focus-visible,.daily-check-action:focus-visible,.daily-add-task:focus-visible{outline:3px solid #f4c04c;outline-offset:-3px;border-radius:9px}
+.daily-block-details{border-top:1px solid var(--line);background:var(--panel2);padding:18px 22px 20px}
+.daily-block-details h3{font-size:14px;margin:10px 0}
+.daily-block-details p,.daily-block-details li{font-size:13px;line-height:1.6;color:var(--text)}
+.daily-block-details ol{margin:0 0 20px;padding-left:22px}
+.daily-block-details li+li{margin-top:7px}
+.daily-note-label{display:block;color:var(--text);font-size:13px;font-weight:700;margin:15px 0 8px}
+.daily-note-input{display:block;width:100%;max-width:100%;min-width:0;resize:vertical;min-height:105px;line-height:1.5}
+.daily-add-task{margin-top:12px}
+.daily-block-details .daily-details-hint{font-size:11px;color:var(--muted);margin:12px 0 0}
+
+/* Mobile task editor: prevent intrinsic form sizes from pushing controls beyond viewport */
+.overlay{inset:0;width:100%;height:100dvh;max-width:100vw;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:12px}
+.modal{width:100%;max-width:620px;min-width:0;max-height:calc(100dvh - 24px);overflow:hidden;min-height:0}
+.modal-head,.modal-actions{flex:0 0 auto;min-width:0;background:var(--panel)}
+.modal-head h2{min-width:0;overflow-wrap:anywhere}
+.modal-content{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+.modal .field,.modal .form-grid{min-width:0}
+.modal .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.modal .field input,.modal .field select,.modal .field textarea{width:100%;max-width:100%;min-width:0}
+.modal-actions{position:relative;z-index:1;flex-wrap:wrap;justify-content:flex-end;padding-bottom:max(14px,env(safe-area-inset-bottom))}
+.modal-actions .btn{min-height:44px}
+@media(max-width:760px){
+ .daily-block-row{min-height:90px;gap:5px;padding:8px}
+ .daily-block-info-action{gap:7px}
+ .daily-block-info-action .daily-block-num{display:none}
+ .daily-block-info-action .daily-block-info strong{font-size:14px}
+ .daily-check-action{min-width:103px;gap:6px;padding:6px 1px}
+ .daily-check-action .daily-switch{width:40px;height:40px;flex-basis:40px}
+ .daily-check-action .daily-block-status{max-width:61px;font-size:10px;overflow-wrap:anywhere}
+ .daily-block-details{padding:15px 14px 18px}
+ .overlay{padding:8px;align-items:center}
+ .modal{max-height:calc(100dvh - 16px);width:100%}
+ .modal .form-grid{grid-template-columns:minmax(0,1fr)}
+ .modal-head,.modal-actions{padding:13px 14px}
+ .modal-content{padding:10px 14px}
+ .modal .field{margin:10px 0;font-size:13px}
+ .modal-actions .btn{flex:1 1 0;min-width:0;white-space:normal}
+}
+@media(max-width:370px){
+ .daily-block-info-action .daily-description-hint{font-size:11px}
+ .daily-check-action{min-width:92px}
+ .daily-check-action .daily-switch{width:36px;height:36px;flex-basis:36px}
+ .daily-check-action .daily-block-status{max-width:50px;font-size:9px}
+}

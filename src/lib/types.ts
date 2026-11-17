@@ -5,7 +5,7 @@ export type Category={id:string;name:string;color:string;minutes:number;sort_ord
 export type Task={id:string;title:string;description:string;category_id:string;priority:Priority;status:Status;due_date:string;start_time:string;end_time:string;planned_minutes:number;actual_minutes:number;created_at:string;completed_at:string|null;notes:string;sort_order:number;recurrence:string};
 export type Session={id:string;task_id:string;started_at:string;ended_at:string|null;duration_seconds:number};
 export type Settings={work_minutes:number;workdays:number[];theme:'dark'|'light'};
-export type Data={categories:Category[];tasks:Task[];sessions:Session[];settings:Settings;dailyChecks?:Record<string,Record<string,boolean>>};
+export type Data={categories:Category[];tasks:Task[];sessions:Session[];settings:Settings;dailyChecks?:Record<string,Record<string,boolean>>;dailyNotes?:Record<string,Record<string,string>>};
 export const uid=()=>crypto.randomUUID();
 export const today=()=>chisinauDate();
 export const initialData=():Data=>({categories:[{id:'sales',name:'Поиск клиентов и продажи',color:'#23ad79',minutes:150,sort_order:0},{id:'offers',name:'Коммерческие предложения и переговоры',color:'#447cf4',minutes:90,sort_order:1},{id:'delivery',name:'Продукт и выполнение заказов',color:'#f4a24e',minutes:75,sort_order:2},{id:'management',name:'Управление и аналитика',color:'#a27af1',minutes:45,sort_order:3}],tasks:[],sessions:[],dailyChecks:{},settings:{work_minutes:360,workdays:[1,2,3,4,5],theme:'dark'}});
