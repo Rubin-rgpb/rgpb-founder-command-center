@@ -21,6 +21,12 @@ jobs:
       - run: npm install --no-audit --no-fund
       - name: Verify daily completion and calendar logic
         run: node --experimental-strip-types --test tests/daily-plan.test.mjs
+      - name: Validate RGPB icon image
+        run: |
+          node - <<'NODE'
+          const sharp=require('sharp');
+          sharp('public/rgpb-logo.jpg').stats().then(()=>console.log('RGPB logo JPEG decoded successfully')).catch(e=>{console.error(e);process.exit(1)});
+          NODE
       - name: Check TypeScript
         run: npm run typecheck
       - name: Build static site
