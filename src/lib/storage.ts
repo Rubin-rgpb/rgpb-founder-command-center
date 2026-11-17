@@ -2,7 +2,8 @@ import type {Data} from './types';
 import {initialData} from './types';
 import {supabase} from './supabase';
 const CACHE='rgpb-founder-cache-v1';
-export function readCache():Data{try{const raw=localStorage.getItem(CACHE);if(raw){const obj=JSON.parse(raw);if(validData(obj))return obj}}catch{}return initialData()}
+const PRE_UPGRADE_BACKUP='rgpb-founder-cache-v1-pre-daily-checks';
+export function readCache():Data{try{const raw=localStorage.getItem(CACHE);if(raw){const obj=JSON.parse(raw);if(validData(obj)){if(!obj.dailyChecks || typeof obj.dailyChecks!=='object'){try{if(localStorage.getItem(PRE_UPGRADE_BACKUP)===null)localStorage.setItem(PRE_UPGRADE_BACKUP,raw)}catch{}return {...obj,dailyChecks:{}}}return obj}}}catch{}return initialData()}
 export function writeCache(data:Data){localStorage.setItem(CACHE,JSON.stringify(data))}
 export function validData(v:unknown):v is Data{if(!v||typeof v!=='object')return false;const d=v as Partial<Data>;return Array.isArray(d.categories)&&Array.isArray(d.tasks)&&Array.isArray(d.sessions)&&!!d.settings&&typeof d.settings.work_minutes==='number'&&d.categories.every(c=>typeof c.id==='string'&&typeof c.minutes==='number')&&d.tasks.every(t=>typeof t.id==='string'&&typeof t.title==='string'&&typeof t.due_date==='string')}
 export async function loadCloud(userId:string):Promise<Data|null>{const db=supabase();if(!db)return null;const {data,error}=await db.from('user_data').select('payload').eq('user_id',userId).maybeSingle();if(error)throw error;return data?.payload&&validData(data.payload)?data.payload:null}
