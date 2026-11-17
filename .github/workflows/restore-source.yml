@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - '.build/source.br.b64'
+      - '.github/workflows/restore-source.yml'
   workflow_dispatch:
 permissions:
   contents: write
@@ -33,15 +34,13 @@ jobs:
           }
           console.log('Restored 18 original source files');
           NODE
-          rm .build/source.br.b64 .github/workflows/restore-source.yml
-          rmdir .build || true
-      - name: Commit restored sources
+      - name: Commit source files without touching workflow permissions
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git diff --cached --quiet || (git commit -m "Restore original RGPB Founder Command Center v0.1.2 sources" && git push)
+          git add .gitignore .env.example README.md next-env.d.ts next.config.ts package.json public src supabase tsconfig.json
+          git diff --cached --quiet || (git commit -m "Restore original v0.1.2 app source without workflow changes" && git push)
       - run: npm install --no-audit --no-fund
       - name: Typecheck
         run: npm run typecheck
