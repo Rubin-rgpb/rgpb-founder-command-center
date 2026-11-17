@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-audit --no-fund
+      - name: Verify daily completion and calendar logic
+        run: node --experimental-strip-types --test tests/daily-plan.test.mjs
       - name: Check TypeScript
         run: npm run typecheck
       - name: Build static site

@@ -1,3 +1,4 @@
+import {chisinauDate} from './daily-plan';
 export type Status='planned'|'in_progress'|'done'|'postponed'|'cancelled';
 export type Priority='high'|'medium'|'low';
 export type Category={id:string;name:string;color:string;minutes:number;sort_order:number};
@@ -6,11 +7,7 @@ export type Session={id:string;task_id:string;started_at:string;ended_at:string|
 export type Settings={work_minutes:number;workdays:number[];theme:'dark'|'light'};
 export type Data={categories:Category[];tasks:Task[];sessions:Session[];settings:Settings;dailyChecks?:Record<string,Record<string,boolean>>};
 export const uid=()=>crypto.randomUUID();
-export const today=()=>{
- const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Chisinau',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
- const part=(type:string)=>parts.find(p=>p.type===type)?.value??'';
- return `${part('year')}-${part('month')}-${part('day')}`;
-};
+export const today=()=>chisinauDate();
 export const initialData=():Data=>({categories:[{id:'sales',name:'Поиск клиентов и продажи',color:'#23ad79',minutes:150,sort_order:0},{id:'offers',name:'Коммерческие предложения и переговоры',color:'#447cf4',minutes:90,sort_order:1},{id:'delivery',name:'Продукт и выполнение заказов',color:'#f4a24e',minutes:75,sort_order:2},{id:'management',name:'Управление и аналитика',color:'#a27af1',minutes:45,sort_order:3}],tasks:[],sessions:[],dailyChecks:{},settings:{work_minutes:360,workdays:[1,2,3,4,5],theme:'dark'}});
 export const duration=(m:number)=>`${Math.floor(Math.max(0,m)/60)} ч ${Math.round(Math.max(0,m)%60)} мин`;
 export const percent=(part:number,total:number)=>total>0?part/total*100:0;
